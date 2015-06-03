@@ -4,6 +4,8 @@ use Phalcon\Mvc\Micro;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Loader;
+use Phalcon\Http\Response;
+
 //use Entity\Pessoa;
 
 
@@ -39,13 +41,19 @@ $app->get('/pessoas',function(){
 
 $app->put('/pessoas/{id}',function($id) use($app){
    $json=$app->request->getJsonRawBody();
-   $pessoa=new Pessoa();
-   $pessoa->id=$id;
+   $pessoa=Pessoa::findFirst($id);
+   if (empty($pessoa)){      //echo "Person dont exist";
+      $response=new Response();
+    //  $response->setContent("Access is not authorized");
+      $response->setStatusCode(404,"Not Found");
+      return $response;
+  } else{
    foreach ($json as $key=>$value){
      $pessoa->{$key}=$value;
    }
    $pessoa->save();
    echo json_encode($pessoa);
+ }
 });
 
 $app->handle();
