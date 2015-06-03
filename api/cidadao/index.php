@@ -18,8 +18,6 @@ $loader->registerDirs(
 
 $di = new FactoryDefault();
 
-
-
 $di->set('db', function(){
         return new DbAdapter(array(
             "host"     => "localhost",
@@ -29,19 +27,25 @@ $di->set('db', function(){
         ));
     });
 
+
+
 $app=new Micro($di);
 
 $app->get('/pessoas',function(){
-    $pessoa=array(array(
-    "nome"=>"genezys",
-    "nacionalidade"=>"brasileiro",
-  ),
-  array(
-    "nome"=>"matheus",
-    "nacionalidade"=>"brasileiro",)
-  );
     $pessoas=Pessoa::find();
-    echo json_encode($pessoa);
+  //  $json[]= $pessoas->jsonSerialize();
+    echo json_encode($pessoas->toArray());
+});
+
+$app->put('/pessoas/{id}',function($id) use($app){
+   $json=$app->request->getJsonRawBody();
+   $pessoa=new Pessoa();
+   $pessoa->id=$id;
+   foreach ($json as $key=>$value){
+     $pessoa->{$key}=$value;
+   }
+   $pessoa->save();
+   echo json_encode($pessoa);
 });
 
 $app->handle();
