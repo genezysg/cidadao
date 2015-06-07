@@ -24,8 +24,9 @@ $di->set('db', function(){
         return new DbAdapter(array(
             "host"     => "localhost",
             "username" => "root",
-            "password" => "root",
-            "dbname"   => "cidadao"
+            "password" => "",
+            "dbname"   => "cidadao",
+            'charset' => 'utf8'
         ));
     });
 
@@ -34,10 +35,20 @@ $di->set('db', function(){
 $app=new Micro($di);
 
 $app->get('/pessoas',function(){
-    $pessoas=Pessoa::find();
-  //  $json[]= $pessoas->jsonSerialize();
-    echo json_encode($pessoas->toArray());
+  $wtf=Pessoa::find();
+//  var_dump($wtf);
+  echo json_encode($wtf->toArray());
+  //echo json_last_error_msg();
 });
+
+$app->get('/pessoas/{id}',function($id){
+  $wtf=Pessoa::findFirst($id);
+  $wtf->updateFiliacao();
+//  var_dump($wtf);
+  echo json_encode($wtf);
+  //echo json_last_error_msg();
+});
+
 
 $app->put('/pessoas/{id}',function($id) use($app){
    $json=$app->request->getJsonRawBody();
@@ -54,6 +65,11 @@ $app->put('/pessoas/{id}',function($id) use($app){
    $pessoa->save();
    echo json_encode($pessoa);
  }
+});
+
+$app->get('/filiacao',function(){
+  $filiacao=Filiacao::find();
+  echo json_encode($filiacao->toArray());
 });
 
 $app->handle();
