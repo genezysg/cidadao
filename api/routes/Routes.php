@@ -1,5 +1,6 @@
 <?php
 
+
 use Phalcon\Mvc\Micro\Collection;
 
 //Input the Causa Controller
@@ -22,3 +23,17 @@ $causaCollection->get('/{id}', 'getOne');
 
 $app->mount($causaCollection);
 //Finish the causa controller routers
+
+
+$assistidoCollection= new Collection();
+
+$assistidoCollection->setHandler(new AssistidoController());
+$assistidoCollection->setPrefix('/assistido');
+
+$assistidoCollection->get('/{id:[0-9]+}', 'get');
+$assistidoCollection->get('/', 'getAll');
+$assistidoCollection->post('/', 'post');
+$assistidoCollection->put('/{id:[0-9]+}', 'put');
+$assistidoCollection->delete('/{id:[0-9]+}', 'delete');
+
+$app->mount($assistidoCollection);
