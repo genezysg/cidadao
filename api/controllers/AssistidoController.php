@@ -1,5 +1,6 @@
 <?php
 use Phalcon\Mvc\Controller;
+
 class AssistidoController extends Controller {
 	public function get($id) {
 		$this->response->setContentType("application/json");
@@ -10,7 +11,7 @@ class AssistidoController extends Controller {
 			$this->response->setStatusCode ( "404" );
 		return $this->response;
 	}
-	
+
 	public function getAll() {
 		$this->response->setContentType("application/json");
 		$assistidos = Assistido::find ();
@@ -22,13 +23,12 @@ class AssistidoController extends Controller {
 			$this->response->setContent ( json_encode ( $data ) );
 		} else
 			$this->response->setStatusCode ( "404" );
-		return $this->response;		
+		return $this->response;
 	}
-	
+
 	public function post() {
 		$this->response->setContentType("application/json");
 		$assistido = new Assistido();
-		
 		$json = $this->request->getJsonRawBody ();
 		foreach ( $json as $key => $value ) {
 			$assistido->{$key} = $value;
@@ -42,7 +42,7 @@ class AssistidoController extends Controller {
 				$this->response->setContent ( json_encode ( $data ) );
 	} else
 			$this->response->setStatusCode ( "204" );
-		
+
 		return $this->response;
 	}
 	public function put($id){

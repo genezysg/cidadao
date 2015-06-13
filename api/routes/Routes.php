@@ -38,6 +38,7 @@ $andamentoCollection->delete('/andamento/{id:[0-9]+}', 'delete');
 
 $app->mount($andamentoCollection);
 
+
 $assistidoCollection= new Collection();
 
 $assistidoCollection->setHandler(new AssistidoController());
@@ -48,5 +49,6 @@ $assistidoCollection->get('/', 'getAll');
 $assistidoCollection->post('/', 'post');
 $assistidoCollection->put('/{id:[0-9]+}', 'put');
 $assistidoCollection->delete('/{id:[0-9]+}', 'delete');
+
 
 $app->mount($assistidoCollection);
