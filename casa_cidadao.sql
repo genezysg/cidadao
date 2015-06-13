@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema casacidadao
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema casacidadao
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `casacidadao` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `casacidadao` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Assistido`
+-- Table `casacidadao`.`Assistido`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Assistido` (
+CREATE TABLE IF NOT EXISTS `casacidadao`.`Assistido` (
   `id` INT NOT NULL,
   `nome` VARCHAR(45) NULL,
   `nacionalidade` VARCHAR(45) NULL,
@@ -39,9 +39,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`AreaAtendimento`
+-- Table `casacidadao`.`AreaAtendimento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`AreaAtendimento` (
+CREATE TABLE IF NOT EXISTS `casacidadao`.`AreaAtendimento` (
   `id` INT NOT NULL,
   `nome` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
@@ -49,9 +49,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Causa`
+-- Table `casacidadao`.`Causa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Causa` (
+CREATE TABLE IF NOT EXISTS `casacidadao`.`Causa` (
   `id` INT NOT NULL,
   `relato` VARCHAR(200) NULL,
   `prazoDecadencial` VARCHAR(45) NULL,
@@ -65,21 +65,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Causa` (
   INDEX `fk_assistido_causa_idx` (`idAssistido` ASC),
   CONSTRAINT `fk_causa_area_atendimento`
     FOREIGN KEY (`idAreaAtendimento`)
-    REFERENCES `mydb`.`AreaAtendimento` (`id`)
+    REFERENCES `casacidadao`.`AreaAtendimento` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_assistido_causa`
     FOREIGN KEY (`idAssistido`)
-    REFERENCES `mydb`.`Assistido` (`id`)
+    REFERENCES `casacidadao`.`Assistido` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ParteContraria`
+-- Table `casacidadao`.`ParteContraria`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`ParteContraria` (
+CREATE TABLE IF NOT EXISTS `casacidadao`.`ParteContraria` (
   `id` INT NOT NULL,
   `nome` VARCHAR(45) NULL,
   `enderecoResidencial` VARCHAR(45) NULL,
@@ -91,16 +91,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ParteContraria` (
   INDEX `fk_causa_parte_contraria_idx` (`idCausa` ASC),
   CONSTRAINT `fk_causa_parte_contraria`
     FOREIGN KEY (`idCausa`)
-    REFERENCES `mydb`.`Causa` (`id`)
+    REFERENCES `casacidadao`.`Causa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Testemunha`
+-- Table `casacidadao`.`Testemunha`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Testemunha` (
+CREATE TABLE IF NOT EXISTS `casacidadao`.`Testemunha` (
   `id` INT NOT NULL,
   `nome` VARCHAR(45) NULL,
   `endereco` VARCHAR(45) NULL,
@@ -110,16 +110,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Testemunha` (
   INDEX `fk_causa_testemunha_idx` (`idCausa` ASC),
   CONSTRAINT `fk_causa_testemunha`
     FOREIGN KEY (`idCausa`)
-    REFERENCES `mydb`.`Causa` (`id`)
+    REFERENCES `casacidadao`.`Causa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Andamento`
+-- Table `casacidadao`.`Andamento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Andamento` (
+CREATE TABLE IF NOT EXISTS `casacidadao`.`Andamento` (
   `id` INT NOT NULL,
   `descricao` VARCHAR(45) NULL,
   `localAudiencia` VARCHAR(45) NULL,
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Andamento` (
   INDEX `fk_causa_andamento_idx` (`idCausa` ASC),
   CONSTRAINT `fk_causa_andamento`
     FOREIGN KEY (`idCausa`)
-    REFERENCES `mydb`.`Causa` (`id`)
+    REFERENCES `casacidadao`.`Causa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
