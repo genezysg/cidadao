@@ -9,8 +9,14 @@ class CausaController extends Controller{
 
 
 public function getAll(){
-  $value = Causa::find();
-  echo json_encode($value->toArray());
+  $causasfound = Causa::find();
+//  $causasfound->AreaAtendimento;
+  foreach ($causasfound as $causa){
+      $causa->AreaAtendimento;
+      //cria array de causas
+      $causas[]=$causa;
+  }
+  echo json_encode($causas);
 }
 
 public function post(){
