@@ -12,7 +12,8 @@ use Phalcon\Http\Response;
 $loader = new Loader();
 $loader->registerDirs(
     array(
-        '../models/'
+        '../models/',
+        '../controllers/',
     )
 )->register();
 
@@ -33,6 +34,8 @@ $di->set('db', function(){
 
 
 $app=new Micro($di);
+
+include_once "../routes/Routes.php";
 
 $app->get('/pessoas',function(){
   $wtf=Pessoa::find();
