@@ -26,7 +26,7 @@ $di->set('db', function(){
             "host"     => "localhost",
             "username" => "root",
             "password" => "",
-            "dbname"   => "cidadao",
+            "dbname"   => "casacidadao",
             'charset' => 'utf8'
         ));
     });

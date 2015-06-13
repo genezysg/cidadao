@@ -9,7 +9,8 @@ class CausaController extends Controller{
 
 
 public function getAll(){
-  echo json_encode("hue");
+  $value = Causa::find();
+  echo json_encode($value->toArray());
 }
 
 public function post(){
