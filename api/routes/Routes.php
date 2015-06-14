@@ -25,15 +25,17 @@ $app->mount($causaCollection);
 //Finish the causa controller routers
 
 
-$assistidoCollection= new Collection();
 
-$assistidoCollection->setHandler(new AssistidoController());
-$assistidoCollection->setPrefix('/assistido');
+$andamentoCollection= new Collection();
 
-$assistidoCollection->get('/{id:[0-9]+}', 'get');
-$assistidoCollection->get('/', 'getAll');
-$assistidoCollection->post('/', 'post');
-$assistidoCollection->put('/{id:[0-9]+}', 'put');
-$assistidoCollection->delete('/{id:[0-9]+}', 'delete');
 
-$app->mount($assistidoCollection);
+$andamentoCollection->setHandler(new AndamentoController());
+
+$andamentoCollection->get('/andamento/{id:[0-9]+}', 'get');
+$andamentoCollection->get('/causa/{idCausa:[0-9]+}/andamento', 'getByCausa');
+$andamentoCollection->get('/andamento', 'getAll');
+$andamentoCollection->post('/andamento', 'post');
+$andamentoCollection->put('/andamento/{id:[0-9]+}', 'put');
+$andamentoCollection->delete('/andamento/{id:[0-9]+}', 'delete');
+
+$app->mount($andamentoCollection);
