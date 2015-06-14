@@ -29,7 +29,6 @@ class AssistidoController extends Controller {
 	public function post() {
 		$this->response->setContentType("application/json");
 		$assistido = new Assistido();
-		$response = new Response();
 		
 		$json = $this->request->getJsonRawBody ();
 		foreach ( $json as $key => $value ) {
@@ -37,19 +36,18 @@ class AssistidoController extends Controller {
 		}
 		if ($assistido->save () == false) {
 			$i = 0;
-			$response->setStatusCode ( "409" );
+			$this->response->setStatusCode ( "409" );
 			foreach ( $assistido->getMessages () as $message ) {
 				$data [++$i] = $message->getMessage ();
 			}
-				$response->setContent ( json_encode ( $data ) );
+				$this->response->setContent ( json_encode ( $data ) );
 	} else
-			$response->setStatusCode ( "204" );
+			$this->response->setStatusCode ( "204" );
 		
-		return $response;
+		return $this->response;
 	}
 	public function put($id){
 		$this->response->setContentType("application/json");
-		$response = new Response();
 		$json = $this->request->getJsonRawBody ();
 		$assistido = Assistido::find ( "id=" . $id )->getFirst ();
 		if (empty ( $assistido ))
@@ -59,36 +57,35 @@ class AssistidoController extends Controller {
 		}
 		if ($assistido->save () == false) {
 			$i = 0;
-			$response->setStatusCode ( "409" );
+			$this->response->setStatusCode ( "409" );
 			foreach ( $assistido->getMessages () as $message ) {
 				$data [++$i] = $message->getMessage ();
 			}
-			$response->setContent ( json_encode ( $data ) );
+			$this->response->setContent ( json_encode ( $data ) );
 		} else {
 			if (! empty ( $assistido ))
-				$response->setStatusCode ( "204" );
+				$this->response->setStatusCode ( "204" );
 			else
-				$response->setStatusCode ( "201" );
+				$this->response->setStatusCode ( "201" );
 		}
-		return $response;
+		return $this->response;
 	}
 	public function delete($id){
 		$this->response->setContentType("application/json");
-		$response = new Response();
 		$assistido = Assistido::find ( "id=" . $id )->getFirst ();
 		if (! empty ( $assistido )) {
 			try {
 				$assistido->delete ();
-				$response->setStatusCode ( "204" );
+				$this->response->setStatusCode ( "204" );
 			} catch ( Exception $e ) {
-				$response->setStatusCode ( "409" );
+				$this->response->setStatusCode ( "409" );
 				foreach ( $assistido->getMessages () as $message ) {
 					$data [++$i] = $message->getMessage ();
 				}
-				$response->setContent ( json_encode ( $data ) );
+				$this->response->setContent ( json_encode ( $data ) );
 			}
 		} else
-			$response->setStatusCode ( "404" );
-		return $response;
+			$this->response->setStatusCode ( "404" );
+		return $this->response;
 	}
 }
