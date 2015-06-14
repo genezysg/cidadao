@@ -1,6 +1,5 @@
 <?php
 use Phalcon\Mvc\Controller;
-use Phalcon\Http\Response;
 class AssistidoController extends Controller {
 	public function get($id) {
 		$this->response->setContentType("application/json");
