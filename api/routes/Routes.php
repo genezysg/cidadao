@@ -1,5 +1,6 @@
 <?php
 
+
 use Phalcon\Mvc\Micro\Collection;
 
 //Input the Causa Controller
@@ -22,3 +23,19 @@ $causaCollection->get('/{id}', 'getOne');
 
 $app->mount($causaCollection);
 //Finish the causa controller routers
+
+
+
+$andamentoCollection= new Collection();
+
+
+$andamentoCollection->setHandler(new AndamentoController());
+
+$andamentoCollection->get('/andamento/{id:[0-9]+}', 'get');
+$andamentoCollection->get('/causa/{idCausa:[0-9]+}/andamento', 'getByCausa');
+$andamentoCollection->get('/andamento', 'getAll');
+$andamentoCollection->post('/andamento', 'post');
+$andamentoCollection->put('/andamento/{id:[0-9]+}', 'put');
+$andamentoCollection->delete('/andamento/{id:[0-9]+}', 'delete');
+
+$app->mount($andamentoCollection);
