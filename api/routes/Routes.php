@@ -3,6 +3,7 @@
 
 use Phalcon\Mvc\Micro\Collection;
 
+<<<<<<< HEAD
 //Input the Causa Controller
 $causaCollection= new Collection();
 
@@ -38,15 +39,24 @@ $andamentoCollection->delete('/andamento/{id:[0-9]+}', 'delete');
 
 $app->mount($andamentoCollection);
 
-$assistidoCollection= new Collection();
 
+$assistidoCollection= new Collection();
 $assistidoCollection->setHandler(new AssistidoController());
 $assistidoCollection->setPrefix('/assistido');
-
 $assistidoCollection->get('/{id:[0-9]+}', 'get');
 $assistidoCollection->get('/', 'getAll');
 $assistidoCollection->post('/', 'post');
 $assistidoCollection->put('/{id:[0-9]+}', 'put');
 $assistidoCollection->delete('/{id:[0-9]+}', 'delete');
-
 $app->mount($assistidoCollection);
+
+
+
+$parte_contrariaCollection= new Collection();
+$parte_contrariaCollection->setHandler(new ParteContrariaController());
+$parte_contrariaCollection->get('/partecontraria/{id:[0-9]+}', 'get');
+$parte_contrariaCollection->get('/partecontraria', 'getAll');
+$parte_contrariaCollection->post('/partecontraria', 'post');
+$parte_contrariaCollection->put('/partecontraria/{id:[0-9]+}', 'put');
+$parte_contrariaCollection->delete('/partecontraria/{id:[0-9]+}', 'delete');
+$app->mount($parte_contrariaCollection);

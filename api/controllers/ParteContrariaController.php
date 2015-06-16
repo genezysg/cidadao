@@ -1,12 +1,13 @@
 <?php
 use Phalcon\Mvc\Controller;
 
-class AssistidoController extends Controller {
+class ParteContrariaController extends Controller {
+
 	public function get($id) {
 		$this->response->setContentType("application/json");
-		$assistido = Assistido::find ( "id=" . $id )->getFirst ();
-		if (! empty ( $assistido ))
-			$this->response->setContent ( json_encode ( $assistido ) );
+		$parte_contraria = ParteContraria::find ( "id=" . $id )->getFirst ();
+		if (! empty ( $parte_contraria ))
+			$this->response->setContent ( json_encode ( $parte_contraria ) );
 		else
 			$this->response->setStatusCode ( "404" );
 		return $this->response;
@@ -14,11 +15,11 @@ class AssistidoController extends Controller {
 
 	public function getAll() {
 		$this->response->setContentType("application/json");
-		$assistidos = Assistido::find ();
-		if (! empty ( $assistidos->getFirst() )) {
+		$parte_contrarias = ParteContraria::find ();
+		if (! empty ( $parte_contrarias->getFirst() )) {
 			$data = array();
-			foreach ( $assistidos as $assistido ) {
-				$data [] = $assistido;
+			foreach ( $parte_contrarias as $parte_contraria ) {
+				$data [] = $parte_contraria;
 			}
 			$this->response->setContent ( json_encode ( $data ) );
 		} else
@@ -28,15 +29,18 @@ class AssistidoController extends Controller {
 
 	public function post() {
 		$this->response->setContentType("application/json");
-		$assistido = new Assistido();
+
+		$parte_contraria = new ParteContraria();
+
+
 		$json = $this->request->getJsonRawBody ();
 		foreach ( $json as $key => $value ) {
-			$assistido->{$key} = $value;
+			$parte_contraria->{$key} = $value;
 		}
-		if ($assistido->save () == false) {
+		if ($parte_contraria->save () == false) {
 			$i = 0;
 			$this->response->setStatusCode ( "409" );
-			foreach ( $assistido->getMessages () as $message ) {
+			foreach ( $parte_contraria->getMessages () as $message ) {
 				$data [++$i] = $message->getMessage ();
 			}
 				$this->response->setContent ( json_encode ( $data ) );
@@ -48,21 +52,21 @@ class AssistidoController extends Controller {
 	public function put($id){
 		$this->response->setContentType("application/json");
 		$json = $this->request->getJsonRawBody ();
-		$assistido = Assistido::find ( "id=" . $id )->getFirst ();
-		if (empty ( $assistido ))
-			$assistido = new Questao ();
+		$parte_contraria = ParteContraria::find ( "id=" . $id )->getFirst ();
+		if (empty ( $parte_contraria ))
+			$parte_contraria = new Questao ();
 		foreach ( $json as $key => $value ) {
-			$assistido->{$key} = $value;
+			$parte_contraria->{$key} = $value;
 		}
-		if ($assistido->save () == false) {
+		if ($parte_contraria->save () == false) {
 			$i = 0;
 			$this->response->setStatusCode ( "409" );
-			foreach ( $assistido->getMessages () as $message ) {
+			foreach ( $parte_contraria->getMessages () as $message ) {
 				$data [++$i] = $message->getMessage ();
 			}
 			$this->response->setContent ( json_encode ( $data ) );
 		} else {
-			if (! empty ( $assistido ))
+			if (! empty ( $parte_contraria ))
 				$this->response->setStatusCode ( "204" );
 			else
 				$this->response->setStatusCode ( "201" );
@@ -71,14 +75,14 @@ class AssistidoController extends Controller {
 	}
 	public function delete($id){
 		$this->response->setContentType("application/json");
-		$assistido = Assistido::find ( "id=" . $id )->getFirst ();
-		if (! empty ( $assistido )) {
+		$parte_contraria = ParteContraria::find ( "id=" . $id )->getFirst ();
+		if (! empty ( $parte_contraria )) {
 			try {
-				$assistido->delete ();
+				$parte_contraria->delete ();
 				$this->response->setStatusCode ( "204" );
 			} catch ( Exception $e ) {
 				$this->response->setStatusCode ( "409" );
-				foreach ( $assistido->getMessages () as $message ) {
+				foreach ( $parte_contraria->getMessages () as $message ) {
 					$data [++$i] = $message->getMessage ();
 				}
 				$this->response->setContent ( json_encode ( $data ) );
