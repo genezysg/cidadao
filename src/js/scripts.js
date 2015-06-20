@@ -17,7 +17,7 @@ $.fn.serializeObject = function() {
 };
 
 function sendForm(form,thisurl){
-model_data = $("#contactForm").serializeObject();
+model_data = $(form).serializeObject();
 console.log(form,thisurl,model_data);
 $.ajax({
 url: thisurl,
