@@ -11,6 +11,7 @@ $loader->registerDirs(
     array(
         '../models/',
         '../controllers/',
+    	'../library/fpdf17/'
     )
 )->register();
 
