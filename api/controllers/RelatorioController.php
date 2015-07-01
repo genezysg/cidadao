@@ -236,3 +236,4 @@ public function getFichaAtendimento($id){
 		$pdf->Cell(175, 5, '___________________________________________',0,1,'R');
 		$pdf->Cell(175, 5, 'Beneficiário / Assistido',0,1,'R');
 }
+}
