@@ -5,8 +5,11 @@ class CausaController extends Controller {
 	public function get($id) {
 		$this->response->setContentType("application/json");
 		$causa = Causa::find ( "id=" . $id )->getFirst ();
-		if (! empty ( $causa ))
+		if (! empty ( $causa )){
+			$causa->areaatendimento;
+			$causa->partecontraria;
 			$this->response->setContent ( json_encode ( $causa ) );
+		}
 		else
 			$this->response->setStatusCode ( "404" );
 		return $this->response;
@@ -18,6 +21,8 @@ class CausaController extends Controller {
 		if (! empty ( $causas->getFirst() )) {
 			$data = array();
 			foreach ( $causas as $causa ) {
+				$causa->areaatendimento;
+				$causa->partecontraria;
 				$data [] = $causa;
 			}
 			$this->response->setContent ( json_encode ( $data ) );
