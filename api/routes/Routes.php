@@ -61,6 +61,7 @@ $parte_contrariaCollection->put('/{id:[0-9]+}', 'put');
 $parte_contrariaCollection->delete('/{id:[0-9]+}', 'delete');
 $app->mount($parte_contrariaCollection);
 
+
 $testemunhaCollection= new Collection();
 $testemunhaCollection->setHandler(new AssistidoController());
 $testemunhaCollection->setPrefix('/testemunha');
@@ -70,3 +71,15 @@ $testemunhaCollection->post('/', 'post');
 $testemunhaCollection->put('/{id:[0-9]+}', 'put');
 $testemunhaCollection->delete('/{id:[0-9]+}', 'delete');
 $app->mount($testemunhaCollection);
+
+
+$relatorios = new Collection();
+$relatorios->setHandler(new RelatorioController());
+$relatorios->get('/causa/{id:[0-9]+}/fichaPrimeiroAtendimento', 'getFichaAtendimento');
+$relatorios->get('/causa/{id:[0-9]+}/relatorio/andamento', 'getAndamentoDaCausa');
+$relatorios->get('/causa/relatorio/filtrarArea/{idArea:[0-9]+}', 'relatorioCausasPorArea');
+$relatorios->get('/causa/relatorio/arquivadas', 'causasArquivadas');
+$relatorios->get('/causa/relatorio/andamento', 'causasEmAndamento');
+$relatorios->get('/assistido/{id}/hiposuficiencia', 'hiposuficiencia');
+$relatorios->get('/assistido/{id}/procuracao', 'procuracao');
+$app->mount($relatorios);
