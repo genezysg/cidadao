@@ -29,7 +29,7 @@ public function getFichaAtendimento($id){
 		$pdf->Cell(0,7,'Nome da Mãe:'.$assistido->nomeMae,1,1);
 		$pdf->Cell(65,7,'Nacionalidade:'.$assistido->nacionalidade,1,0);
 		$pdf->Cell(65,7,'Estado Civil:'.$assistido->estadoCivil,1,0);
-		$pdf->Cell(0,7,'Data de Nascimento:'.$assistido->dataNascimento,1,1);
+		$pdf->Cell(0,7,'Data de Nascimento:'.date("d/m/Y", strtotime($assistido->dataNascimento)),1,1);
 		$pdf->Cell(50,7,'Identidade:'.$assistido->identidade,1,0);
 		$pdf->Cell(50,7,'CPF:'.$assistido->cpf,1,0);
 		$pdf->Cell(0,7,'Profissão:'.$assistido->profissao,1,1);
@@ -55,7 +55,7 @@ public function getFichaAtendimento($id){
 		$pdf->Cell(0,10,'Atendimento:',0,1,'L');
 		$pdf->SetFont('Arial','B',10);
 		$pdf->Cell(0,7,'Responsável: ',1,1);
-		$pdf->Cell(90,7,'Data e Hora: '.$causa->dataAtendimento,1,0);		
+		$pdf->Cell(90,7,'Data e Hora: '.date("d/m/Y, H:i:s", strtotime($causa->dataAtendimento)),1,0);		
 		$pdf->Cell(0,7,'Local: '.$causa->localAtendimento,1,1);
 		$pdf->SetY(265);
 		$pdf->Cell(0,5,'_________________________________________',0,1,'C');
@@ -83,17 +83,23 @@ public function getFichaAtendimento($id){
 		$pdf->SetFont('Arial','B',12);
 		$pdf->Cell(0,5,'Histórico de Audiências',0,1,'C');		
 		$x1 = $x2 = 93;
-		for ($i = 0; $i < count($andamentos); $i++) {
-			$pdf->SetFont('Arial','B',12);
-			$pdf->Cell(0,5,'',0,1);
-			$pdf->MultiCell(80,10,'Descrição: '.$andamentos[$i]->descricao,0,'L',false);
+		if (count($andamentos) == 0){
 			$pdf->SetFont('Arial','',10);
-			$pdf->Cell(25,5,'Local: ',0,0);
-			$pdf->Cell(25,5,$andamentos[$i]->localAudiencia,0,1);
-			$pdf->Cell(25,5,'Data e Hora: ',0,0);
-			$pdf->Cell(25,5,$andamentos[$i]->dataHora,0,1);
-			$pdf->Line(20, $x1, 190, $x2);
-			$x1 = $x2 += 25;
+			$pdf->Cell(0,20,'Sem Audiências Lançadas',0,1,'C');
+		}
+		else{
+			for ($i = 0; $i < count($andamentos); $i++) {
+				$pdf->SetFont('Arial','B',12);
+				$pdf->Cell(0,5,'',0,1);
+				$pdf->MultiCell(80,10,'Descrição: '.$andamentos[$i]->descricao,0,'L',false);
+				$pdf->SetFont('Arial','',10);
+				$pdf->Cell(25,5,'Local: ',0,0);
+				$pdf->Cell(25,5,$andamentos[$i]->localAudiencia,0,1);
+				$pdf->Cell(25,5,'Data e Hora: ',0,0);
+				$pdf->Cell(25,5,date("d/m/Y, H:i:s", strtotime($andamentos[$i]->dataHora)),0,1);
+				$pdf->Line(20, $x1, 190, $x2);
+				$x1 = $x2 += 25;
+			}
 		}
 		echo $pdf->Output();
 	}
@@ -104,74 +110,64 @@ public function getFichaAtendimento($id){
 		$pdf = new FPDF('L');
 		$pdf->AddPage();
 		$pdf->SetFont('Arial','B',16);
-		$pdf->Cell(0,10,'Causas por Área - '.$area_atendimento->nome,0,1,'C');
+		$pdf->Cell(0,10,'Causas por Área de Atendimento - '.$area_atendimento->nome,0,1,'C');
 		$pdf->SetFont('Arial','B',12);
-		$pdf->Cell(80,5,'Relato',1,0);
-		$pdf->Cell(50,5,'Prazo Decadencial',1,0);
-		$pdf->Cell(50,5,'Prazo Drescricional',1,0);
-		$pdf->Cell(50,5,'Tipo de Ação',1,0);
-		$pdf->Cell(50,5,'Assistido',1,1);
-		$pdf->SetFont('Arial','',12);
 		for ($i = 0; $i < count($causa); $i++) {
 			if ($idArea == $causa[$i]->areaatendimento->id){
-				$pdf->Cell(80,5,$causa[$i]->relato,1,0);
-				$pdf->Cell(50,5,$causa[$i]->prazoDecadencial,1,0);
-				$pdf->Cell(50,5,$causa[$i]->prazoDrescricional,1,0);
-				$pdf->Cell(50,5,$causa[$i]->tipoAcao,1,0);
+				$pdf->SetFont('Arial','B',14);
+				$pdf->Cell(0,20,'Causa Nº '.$causa[$i]->id,0,1,'C');
+				$pdf->SetFont('Arial','B',12);
+				$pdf->MultiCell(0, 10, 'Relato: '.$causa[$i]->relato);
+				$pdf->Cell(110,10,'Prazo Decadencial: '.$causa[$i]->prazoDecadencial,0,0);
+				$pdf->Cell(0,10,'Prazo Drescricional: '.$causa[$i]->prazoPrescricional,0,1);
+				$pdf->Cell(110,10,'Tipo de Ação: '.$causa[$i]->tipoAcao,0,0);
 				$assistido = $this->call('http://localhost/av2/api/cidadao/assistido/'.$causa[$i]->idAssistido);
-				$pdf->Cell(50,5,$assistido->nome,1,1);
+				$pdf->Cell(0,10,'Nome do Assistido: '.$assistido->nome,0,1);				
 			}
 		}
 		echo $pdf->Output();
 	}
 	public function causasArquivadas(){
-		$causas = $this->call('http://localhost/av2/api/cidadao/causa');
+		$causa = $this->call('http://localhost/av2/api/cidadao/causa');
 		$this->response->setContentType("application/pdf");
 		$pdf = new FPDF('L');
 		$pdf->AddPage();
 		$pdf->SetFont('Arial','B',16);
 		$pdf->Cell(0,10,'Causas Aquivadas',0,1,'C');
-		$pdf->SetFont('Arial','B',12);
-		$pdf->Cell(80,5,'Relato',1,0);
-		$pdf->Cell(50,5,'Prazo Decadencial',1,0);
-		$pdf->Cell(50,5,'Prazo Drescricional',1,0);
-		$pdf->Cell(50,5,'Tipo de Ação',1,0);
-		$pdf->Cell(50,5,'Assistido',1,1);
-		$pdf->SetFont('Arial','',12);
-		for ($i = 0; $i < count($causas); $i++) {
-			if ($causas[$i]->aquivado){
-				$pdf->Cell(80,5,$causas[$i]->relato,1,0);
-				$pdf->Cell(50,5,$causas[$i]->prazoDecadencial,1,0);
-				$pdf->Cell(50,5,$causas[$i]->prazoDrescricional,1,0);
-				$pdf->Cell(50,5,$causas[$i]->tipoAcao,1,0);
-				$assistido = $this->call('http://localhost/av2/api/cidadao/assistido/'.$causas[$i]->idAssistido);
-				$pdf->Cell(50,5,$assistido->nome,1,1);
+		for ($i = 0; $i < count($causa); $i++) {
+			if ($causa[$i]->aquivado){
+				$pdf->SetFont('Arial','B',14);
+				$pdf->Cell(0,20,'Causa Nº '.$causa[$i]->id,0,1,'C');
+				$pdf->SetFont('Arial','B',12);
+				$pdf->MultiCell(0, 10, 'Relato: '.$causa[$i]->relato);
+				$pdf->Cell(110,10,'Prazo Decadencial: '.$causa[$i]->prazoDecadencial,0,0);
+				$pdf->Cell(0,10,'Prazo Drescricional: '.$causa[$i]->prazoPrescricional,0,1);
+				$pdf->Cell(110,10,'Tipo de Ação: '.$causa[$i]->tipoAcao,0,0);
+				$assistido = $this->call('http://localhost/av2/api/cidadao/assistido/'.$causa[$i]->idAssistido);
+				$pdf->Cell(0,10,'Nome do Assistido: '.$assistido->nome,0,1);				
 			}
 		}
 		echo $pdf->Output();
 	}
 	public function causasEmAndamento(){
-		$causas = $this->call('http://localhost/av2/api/cidadao/causa');
+		$causa = $this->call('http://localhost/av2/api/cidadao/causa');
 		$this->response->setContentType("application/pdf");
+		
 		$pdf = new FPDF('L');
 		$pdf->AddPage();
 		$pdf->SetFont('Arial','B',16);
 		$pdf->Cell(0,10,'Causas em Andamento',0,1,'C');
-		$pdf->SetFont('Arial','B',12);
-		$pdf->Cell(80,5,'Relato',1,0);
-		$pdf->Cell(50,5,'Prazo Decadencial',1,0);
-		$pdf->Cell(50,5,'Prazo Drescricional',1,0);
-		$pdf->Cell(50,5,'Tipo de Ação',1,0);
-		$pdf->Cell(50,5,'Assistido',1,1);
-		$pdf->SetFont('Arial','',12);
-		for ($i = 0; $i < count($causas); $i++) {
-			if (!$causas[$i]->aquivado){
-				$pdf->Cell(80,5,$causas[$i]->relato,1,0);
-				$pdf->Cell(50,5,$causas[$i]->prazoDecadencial,1,0);
-				$pdf->Cell(50,5,$causas[$i]->prazoDrescricional,1,0);
-				$pdf->Cell(50,5,$causas[$i]->tipoAcao,1,0);
-				$assistido = $this->call('http://localhost/av2/api/cidadao/assistido/'.$causas[$i]->idAssistido);
-				$pdf->Cell(50,5,$assistido->nome,1,1);
+		for ($i = 0; $i < count($causa); $i++) {
+			if (!$causa[$i]->aquivado){
+				$pdf->SetFont('Arial','B',14);
+				$pdf->Cell(0,20,'Causa Nº '.$causa[$i]->id,0,1,'C');
+				$pdf->SetFont('Arial','B',12);
+				$pdf->MultiCell(0, 10, 'Relato: '.$causa[$i]->relato);
+				$pdf->Cell(110,10,'Prazo Decadencial: '.$causa[$i]->prazoDecadencial,0,0);
+				$pdf->Cell(0,10,'Prazo Drescricional: '.$causa[$i]->prazoPrescricional,0,1);
+				$pdf->Cell(110,10,'Tipo de Ação: '.$causa[$i]->tipoAcao,0,0);
+				$assistido = $this->call('http://localhost/av2/api/cidadao/assistido/'.$causa[$i]->idAssistido);
+				$pdf->Cell(0,10,'Nome do Assistido: '.$assistido->nome,0,1);				
 			}
 		}
 		echo $pdf->Output();
@@ -189,7 +185,7 @@ public function getFichaAtendimento($id){
 		$pdf->SetXY(25,100);
 		$pdf->MultiCell(160,7,'Pelo presente instrumento particular de mandato, '.$assistido->nome.', '.$assistido->nacionalidade.
 				', '.$assistido->estadoCivil.', '.$assistido->profissao.', '.$assistido->identidade.', '.$assistido->cpf.
-				', '.$assistido->nomeMae.', '.$assistido->dataNascimento.', '.$assistido->endereco.', nomeia e constitui '.
+				', '.$assistido->nomeMae.', '.date("d/m/Y", strtotime($assistido->dataNascimento)).', '.$assistido->endereco.', nomeia e constitui '.
 				'como procurador(a), NOME DOS ADVOGADOS inscrito(a) na OAB/RJ sob o número, e os estagiários(as) '.
 				'______________________________________, inscritos na OAB/RJ, sob os números ____________________________ '.
 				' respectivamente, todos integrantes do Núcleo de Prática Jurídica – NPJ, da UNIABEU, com sede na '.
