@@ -21,8 +21,8 @@ class CausaController extends Controller {
 		if (! empty ( $causas->getFirst() )) {
 			$data = array();
 			foreach ( $causas as $causa ) {
-				$causa->areaatendimento;
-				$causa->partecontraria;
+				$causa->AreaAtendimento;
+			//	$causa->ParteContraria;
 				$data [] = $causa;
 			}
 			$this->response->setContent ( json_encode ( $data ) );
@@ -38,16 +38,8 @@ class CausaController extends Controller {
 		foreach ( $json as $key => $value ) {
 			$causa->{$key} = $value;
 		}
-		if ($causa->save () == false) {
-			$i = 0;
-			$this->response->setStatusCode ( "409" );
-			foreach ( $causa->getMessages () as $message ) {
-				$data [++$i] = $message->getMessage ();
-			}
-				$this->response->setContent ( json_encode ( $data ) );
-	} else
-			$this->response->setStatusCode ( "204" );
-
+		$causa->save ();
+		$this->response->setContent(json_encode($causa));
 		return $this->response;
 	}
 	public function put($id){
