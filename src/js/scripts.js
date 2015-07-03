@@ -1,4 +1,7 @@
-var assistidoURL= "http://localhost/cidadao/api/cidadao/assistido";
+
+var lhost=location.host;
+var assistidoURL= "http://"+lhost+"/cidadao/api/cidadao/assistido";
+var causaURL ="http://"+lhost+"/cidadao/api/cidadao/causa";
 
 $.fn.serializeObject = function() {
 	var o = {};
