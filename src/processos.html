@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Casa Cidadao - Atendimento</title>
+  <title>Casa Cidadao - Processos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -43,11 +43,11 @@
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active">
-							<a href="#">Atendimento</a>
-						</li>
 						<li>
-							<a href="processos.html">Processos</a>
+							<a href="atendimento.html">Atendimento</a>
+						</li>
+						<li class="active">
+							<a href="#">Processos</a>
 						</li>
             <li>
               <a href="relatorios.html">Relatorios</a>
@@ -63,90 +63,84 @@
 
 			<div class="jumbotron">
 				<h1>
-					Atendimento
+					Processo
 				</h1>
 			</div>
 		</div>
 	</div>
 	<div class="row clearfix">
-    <form name="sentMessage" id="contactForm" novalidate="">
+
+
+    <form name="processForm" id="processForm" novalidate="">
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Full Name:</label>
-                            <input type="text" class="form-control" name="nome" id="nome" required="" data-validation-required-message="Please enter your name." aria-invalid="false">
+                            <label>Assistido:</label>
+                            <input type="text" class="form-control" name="idAssistido" id="idAssistido" required="" data-validation-required-message="Please enter your name." aria-invalid="false">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Phone Number:</label>
-                            <input type="tel" class="form-control" name="nacionalidade" id="nacionalidade" required="" data-validation-required-message="Please enter your phone number." aria-invalid="false">
+                            <label>Área de Atendimento:</label>
+                            <input type="tel" class="form-control" name="idAreaAtendimento" id="idAreaAtendimento" required="" data-validation-required-message="Please enter your phone number." aria-invalid="false">
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Email Address:</label>
-                            <input type="email" class="form-control" name="estadoCivil" id="estadoCivil" required="" data-validation-required-message="Please enter your email address.">
+                            <label>prazoDecadencial:</label>
+                            <input type="date" class="form-control" name="prazoDecadencial" id="prazoDecadencial" required="" data-validation-required-message="Please enter your email address.">
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Message:</label>
-                            <textarea rows="10" cols="100" class="form-control" name="profissao" id="profissao" required="" data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+                            <label>prazoPrescricional:</label>
+                            <input type="date" class="form-control" name="prazoPrescricional" id="prazoPrescricional" required="" data-validation-required-message="Please enter your email address.">
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Identidade:</label>
-                            <input type="text" class="form-control" name="identidade" id="identidade" required="" data-validation-required-message="Please enter your email address.">
+                            <label>dataAtendimento:</label>
+                            <input type="date" class="form-control" name="dataAtendimento" id="dataAtendimento" required="" data-validation-required-message="Please enter your email address.">
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>CPF:</label>
-                            <input type="text" class="form-control" name="cpf" id="cpf" required="" data-validation-required-message="Please enter your email address.">
+                            <label>tipoAcao:</label>
+                            <input type="text" class="form-control" name="tipoAcao" id="tipoAcao" required="" data-validation-required-message="Please enter your email address.">
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Data do Nascimento:</label>
-                            <input type="date" class="form-control" name="dataNascimento" id="dataNascimento" required="" data-validation-required-message="Please enter your email address.">
+                            <label>localAtendimento:</label>
+                            <input type="text" class="form-control" name="localAtendimento" id="localAtendimento" required="" data-validation-required-message="Please enter your email address.">
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Nome do Pai:</label>
-                            <input type="text" class="form-control" name="nomePai" id="nomePai" required="" data-validation-required-message="Please enter your email address.">
+                            <label>Relato:</label>
+                            <textarea rows="10" cols="100" class="form-control" name="relato" id="relato" required="" data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Nome da Mãe:</label>
-                            <input type="text" class="form-control" name="nomeMae" id="nomeMae" required="" data-validation-required-message="Please enter your email address.">
+                            <div class="checkbox">
+<label><input type="checkbox" value="1" name="aquivado">Arquivado</label>
+</div>
                         <div class="help-block"></div></div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Endereço:</label>
-                            <input type="text" class="form-control" name="endereco" id="endereco" required="" data-validation-required-message="Please enter your email address.">
-                        <div class="help-block"></div></div>
+                            <div class="form-group">
+                              <label for="status">status:</label>
+                              <select class="form-control" name="status" id="status">
+                                <option>Em Processo</option>
+                                <option>Finalizado</option>
+                              </select>
+                            </div>                        <div class="help-block"></div></div>
                     </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label>Rendimento Pessoal:</label>
-                            <input type="text" class="form-control" name="rendimentoPessoal" id="rendimentoPessoal" required="" data-validation-required-message="Please enter your email address.">
-                        <div class="help-block"></div></div>
-                    </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label>Rendimento Familiar:</label>
-                            <input type="text" class="form-control" name="rendimentoFamiliar" id="rendimentoFamiliar" required="" data-validation-required-message="Please enter your email address.">
-                        <div class="help-block"></div></div>
-                    </div>
-                    <div class='alert alert-success' id="sucessoform" style = "display:none;" role='alert'>Seu atendimento foi registrado com sucesso!</div>
-
+                    <div class='alert alert-success' id="sucessoform" style = "display:none;" role='alert'>Seu processo foi enviado com sucesso!</div>
                     <!-- For success/fail messages -->
-                    <button type="button" class="btn btn-primary" onclick="sendForm('#contactForm',assistidoURL)">Registrar Atendimento</button>
+                    <button type="button" class="btn btn-primary" onclick="sendForm('#processForm',causaURL)">Enviar Processo</button>
                 </form>
 	</div>
 </div>

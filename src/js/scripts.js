@@ -1,4 +1,7 @@
-var assistidoURL= "http://localhost/cidadao/api/cidadao/assistido";
+
+var lhost=location.host;
+var assistidoURL= "http://"+lhost+"/cidadao/api/cidadao/assistido";
+var causaURL ="http://"+lhost+"/cidadao/api/cidadao/causa";
 
 $.fn.serializeObject = function() {
 	var o = {};
@@ -17,7 +20,7 @@ $.fn.serializeObject = function() {
 };
 
 function sendForm(form,thisurl){
-model_data = $("#contactForm").serializeObject();
+model_data = $(form).serializeObject();
 console.log(form,thisurl,model_data);
 $.ajax({
 url: thisurl,
@@ -27,6 +30,9 @@ data: JSON.stringify(model_data),
 dataType: 'json',
 success:function(e){
   console.log(form,thisurl,model_data)
+	$(form).trigger("reset");
+	$("#sucessoform").show();
+
 
     // I know, you do not want Ajax, if you callback to page, you can refresh page here
    }

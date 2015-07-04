@@ -5,8 +5,10 @@ use Phalcon\Mvc\Model;
 
 
 
-class Areaatendimento extends Model{
+class AreaAtendimento extends Model{
   public $id;
-
+  public function getSource(){
+		return "areaatendimento";
+	}
 
 }

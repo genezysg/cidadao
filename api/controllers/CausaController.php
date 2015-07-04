@@ -1,28 +1,26 @@
 <?php
 use Phalcon\Mvc\Controller;
-
 class CausaController extends Controller {
 	public function get($id) {
 		$this->response->setContentType("application/json");
 		$causa = Causa::find ( "id=" . $id )->getFirst ();
 		if (! empty ( $causa )){
-			$causa->areaatendimento;
-			$causa->partecontraria;
+			$causa->AreaAtendimento;
+			$causa->ParteContraria;
 			$this->response->setContent ( json_encode ( $causa ) );
 		}
 		else
 			$this->response->setStatusCode ( "404" );
 		return $this->response;
 	}
-
 	public function getAll() {
 		$this->response->setContentType("application/json");
 		$causas = Causa::find ();
 		if (! empty ( $causas->getFirst() )) {
 			$data = array();
 			foreach ( $causas as $causa ) {
-				$causa->areaatendimento;
-				$causa->partecontraria;
+				$causa->AreaAtendimento;
+				$causa->ParteContraria;
 				$data [] = $causa;
 			}
 			$this->response->setContent ( json_encode ( $data ) );
@@ -30,7 +28,6 @@ class CausaController extends Controller {
 			$this->response->setStatusCode ( "404" );
 		return $this->response;
 	}
-
 	public function post() {
 		$this->response->setContentType("application/json");
 		$causa = new Causa();
@@ -47,7 +44,6 @@ class CausaController extends Controller {
 				$this->response->setContent ( json_encode ( $data ) );
 	} else
 			$this->response->setStatusCode ( "204" );
-
 		return $this->response;
 	}
 	public function put($id){
