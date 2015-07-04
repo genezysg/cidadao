@@ -105,6 +105,67 @@
                       <button type="button" class="btn btn-primary" onclick="location.href='/cidadao/api/cidadao/causa/'+$('#codigo2').val()+'/relatorio/andamento'">Gerar Relatório</button>
                   </form>
     </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Relatórios de Causas por Área</h3>
+      </div>
+                  <form name="relatorioForm" id="relatorioForm" novalidate="">
+                      <div class="control-group form-group">
+                          <div class="controls">
+                              <label>Código da Causa:</label>
+                              <input type="text" class="form-control" name="codigo3" id="codigo3" required="" data-validation-required-message="Please enter your name." aria-invalid="false">
+                              <p class="help-block"></p>
+                          </div>
+                      </div>
+
+                      <!-- For success/fail messages -->
+                      <button type="button" class="btn btn-primary" onclick="location.href='/cidadao/api/cidadao/causa/relatorio/filtrarArea/'+$('#codigo2').val()+''">Gerar Relatório</button>
+                  </form>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Relatórios de Causas por Área</h3>
+      </div>
+                  <form name="relatorioForm" id="relatorioForm" novalidate="">
+                      <div class="control-group form-group">
+                          <div class="controls">
+                              <label>Código da Causa:</label>
+                              <input type="text" class="form-control" name="codigo3" id="codigo3" required="" data-validation-required-message="Please enter your name." aria-invalid="false">
+                              <p class="help-block"></p>
+                          </div>
+                      </div>
+
+                      <!-- For success/fail messages -->
+                      <button type="button" class="btn btn-primary" onclick="location.href='/cidadao/api/cidadao/causa/relatorio/filtrarArea/'+$('#codigo2').val()+''">Gerar Relatório</button>
+                  </form>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Relatórios do Assistido</h3>
+      </div>
+                  <form name="relatorioForm" id="relatorioForm" novalidate="">
+                      <div class="control-group form-group">
+                          <div class="controls">
+                              <label>Código do Assistido:</label>
+                              <input type="text" class="form-control" name="codigo4" id="codigo4" required="" data-validation-required-message="Please enter your name." aria-invalid="false">
+                              <p class="help-block"></p>
+                          </div>
+                      </div>
+
+                      <!-- For success/fail messages -->
+                      <button type="button" class="btn btn-primary" onclick="location.href='/cidadao/api/cidadao/assistido/'+$('#codigo4').val()+'/procuracao'">Gerar Declaração de Hiposuficiencia</button>
+                      <button type="button" class="btn btn-primary" onclick="location.href='/cidadao/api/cidadao/assistido/'+$('#codigo4').val()+'/hiposuficiencia'">Gerar Procuração</button>
+                  </form>
+    </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Demais Relatórios</h3>
+          </div>
+          <br>
+          <button type="button" class="btn btn-primary" onclick="location.href='/cidadao/api/cidadao/causa/relatorio/arquivadas'">Causas Arquivadas</button>
+          <button type="button" class="btn btn-primary" onclick="location.href='/cidadao/api/cidadao/causa/relatorio/andamento'">Causas em Andamento</button>
+                          <!-- For success/fail messages -->
+        </div>
 
 	</div>
 </div>
