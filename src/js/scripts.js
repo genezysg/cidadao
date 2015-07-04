@@ -30,6 +30,9 @@ data: JSON.stringify(model_data),
 dataType: 'json',
 success:function(e){
   console.log(form,thisurl,model_data)
+	$(form).trigger("reset");
+	$("#sucessoform").show();
+
 
     // I know, you do not want Ajax, if you callback to page, you can refresh page here
    }
