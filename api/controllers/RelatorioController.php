@@ -186,7 +186,7 @@ public function getFichaAtendimento($id){
 		$pdf->MultiCell(160,7,'Pelo presente instrumento particular de mandato, '.$assistido->nome.', '.$assistido->nacionalidade.
 				', '.$assistido->estadoCivil.', '.$assistido->profissao.', '.$assistido->identidade.', '.$assistido->cpf.
 				', '.$assistido->nomeMae.', '.date("d/m/Y", strtotime($assistido->dataNascimento)).', '.$assistido->endereco.', nomeia e constitui '.
-				'como procurador(a), NOME DOS ADVOGADOS inscrito(a) na OAB/RJ sob o número, e os estagiários(as) '.
+				'como procurador(a) ______________________________________, inscrito(a) na OAB/RJ sob o número ______________________________________, e os estagiários(as) '.
 				'______________________________________, inscritos na OAB/RJ, sob os números ____________________________ '.
 				' respectivamente, todos integrantes do Núcleo de Prática Jurídica – NPJ, da UNIABEU, com sede na '.
 				'Av. Getúlio Vargas, n.º 1730, Centro, Nilópolis/RJ, CEP: 26510-010, conferindo-lhes os poderes para representar '.
@@ -231,5 +231,6 @@ public function getFichaAtendimento($id){
 		$pdf->Cell(95, 55, 'Rio de Janeiro, ______ de ________________ de __________',0,1,'R');
 		$pdf->Cell(175, 5, '___________________________________________',0,1,'R');
 		$pdf->Cell(175, 5, 'Beneficiário / Assistido',0,1,'R');
+		echo $pdf->Output();
 }
 }
