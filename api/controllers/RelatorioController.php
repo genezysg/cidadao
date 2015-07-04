@@ -54,7 +54,6 @@ public function getFichaAtendimento($id){
 		$pdf->SetFont('Arial','B',12);
 		$pdf->Cell(0,10,'Atendimento:',0,1,'L');
 		$pdf->SetFont('Arial','B',10);
-		$pdf->Cell(0,7,'Responsável: ',1,1);
 		$pdf->Cell(90,7,'Data e Hora: '.date("d/m/Y, H:i:s", strtotime($causa->dataAtendimento)),1,0);		
 		$pdf->Cell(0,7,'Local: '.$causa->localAtendimento,1,1);
 		$pdf->SetY(265);
